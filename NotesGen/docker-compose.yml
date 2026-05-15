@@ -13,6 +13,7 @@ services:
 
   # 2. Spring Boot Backend
   backend:
+    restart: on-failure
     build:
       context: ./notes
       dockerfile: Dockerfile
@@ -41,6 +42,7 @@ services:
   # If deploying to AWS, you'll pass DB_HOST=your-rds-endpoint from Jenkins
   database:
     image: mysql:8.0
+    command: --pid-file=/var/run/mysqld/mysqld.pid
     ports:
       - "3307:3306"
     environment:
