@@ -45,7 +45,7 @@ services:
       # =========================
       # Flask Internal API
       # =========================
-      - FLASK_API_URL=http://flask-service:5001/transcribe
+      - FLASK_API_URL=https://dzhhnw8t-5001.inc1.devtunnels.ms/transcribe
 
     depends_on:
       - flask-service
