@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext.jsx";
 import { loginUser } from "../api";
-import NotesSidebar from "./NotesSidebar.jsx";
+import NotesSideBar from "./NotesSideBar.jsx";
 import NotesDisplay from "./NoteDis.jsx";
 import { ThemeContext } from "../context/ThemeContext.jsx";
 
@@ -98,7 +98,7 @@ const NotesList = () => {
       {/* 🧱 Main Layout */}
       <div className="flex flex-1 overflow-hidden">
         {isSidebarOpen && (
-          <NotesSidebar
+          <NotesSideBar
             notes={notes}
             selectedNote={selectedNote}
             onSelect={setSelectedNote}
@@ -120,7 +120,7 @@ export default NotesList;
 // import React, { useState, useContext, useEffect } from "react";
 // import { AuthContext } from "../context/AuthContext.jsx";
 // import { loginUser } from "../api";
-// import NotesSidebar from "./NotesSidebar.jsx";
+// import NotesSideBar from "./NotesSideBar.jsx";
 // import NotesDisplay from "./NoteDis.jsx";
 // import { ThemeContext } from "../context/ThemeContext.jsx";
 
@@ -213,7 +213,7 @@ export default NotesList;
 //       {/* 🧱 Main Layout */}
 //       <div className="flex flex-1 overflow-hidden">
 //         {isSidebarOpen && (
-//           <NotesSidebar
+//           <NotesSideBar
 //             notes={notes}
 //             selectedNote={selectedNote}
 //             onSelect={setSelectedNote}
