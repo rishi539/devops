@@ -1,55 +1,62 @@
 version: '3.8'
 
 services:
-  # 1. React Frontend
+
+  # =========================
+  # React Frontend
+  # =========================
   frontend:
     build:
       context: ./LinkToNotes
       dockerfile: Dockerfile
-    ports:
-      - "80:3000"       # Public access on standard HTTP port 80 to container port 3000
-    depends_on:
-      - backend       # Wait for backend to be ready
 
-  # 2. Spring Boot Backend
+    ports:
+      - "80:5173"
+
+    depends_on:
+      - backend
+
+  # =========================
+  # Spring Boot Backend
+  # =========================
   backend:
     restart: on-failure
+
     build:
       context: ./notes
       dockerfile: Dockerfile
+
     ports:
-      - "8080:8080"   # If ALB needs to target it directly
+      - "8080:8080"
+
     environment:
-      # Inject environment variables for the database
-      - SPRING_DATASOURCE_URL=jdbc:mysql://${DB_HOST:-database}:${DB_PORT:-3306}/Notes?createDatabaseIfNotExist=true
-      - SPRING_DATASOURCE_USERNAME=${DB_USER:-root}
-      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:-root}
+      # =========================
+      # AWS RDS MySQL
+      # =========================
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database-1.caz6gioscij0.us-east-1.rds.amazonaws.com:3306/Notes?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=12345678
+
+      # =========================
+      # JPA Configuration
+      # =========================
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      # Point to the internal Docker network name of the flask service
+
+      # =========================
+      # Flask Internal API
+      # =========================
       - FLASK_API_URL=http://flask-service:5001/transcribe
+
     depends_on:
       - flask-service
 
-  # 3. Python Flask Service
+  # =========================
+  # Python Flask Service
+  # =========================
   flask-service:
     build:
       context: .
       dockerfile: Dockerfile.flask
-    ports:
-      - "5001:5001"   # Optional: Map for local testing
 
-  # 4. Optional Local Database (For local testing without AWS RDS)
-  # If deploying to AWS, you'll pass DB_HOST=your-rds-endpoint from Jenkins
-  database:
-    image: mysql:8.0
-    command: --pid-file=/var/run/mysqld/mysqld.pid
     ports:
-      - "3307:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=Notes
-    volumes:
-      - db-data:/var/lib/mysql
-
-volumes:
-  db-data:
+      - "5001:5001"
