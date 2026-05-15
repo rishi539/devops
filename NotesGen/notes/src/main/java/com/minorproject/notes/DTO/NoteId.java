@@ -1,0 +1,15 @@
+package com.minorproject.notes.DTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class NoteId {
+   int chunkSize;
+   Long notesId;
+}

@@ -1,0 +1,6 @@
+2025-11-04 22:17:28,499 [INFO] Received transcription request for https://youtu.be/Ut4RpySLM6Y, translate=True
+2025-11-04 22:17:29,511 [INFO] Found Hindi captions, translating via Whisper.
+2025-11-04 22:17:35,297 [ERROR] espeak failed: [Errno 2] No such file or directory: 'espeak'
+2025-11-04 22:17:35,307 [INFO] Returning captions result from captions-hi-whisper-translate
+2025-11-04 22:17:35,308 [INFO] 127.0.0.1 - - [04/Nov/2025 22:17:35] "POST /transcribe HTTP/1.1" 200 -
+2025-11-04 22:17:35,308 [INFO] 127.0.0.1 - - [04/Nov/2025 22:17:35] "POST /transcribe HTTP/1.1" 200 -

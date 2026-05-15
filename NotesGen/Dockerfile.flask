@@ -1,0 +1,19 @@
+FROM python:3.9-slim
+WORKDIR /app
+
+# Install system dependencies (ffmpeg is required for yt-dlp to process audio)
+RUN apt-get update && \
+    apt-get install -y ffmpeg && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install python dependencies directly
+RUN pip install flask flask-cors youtube-transcript-api yt-dlp
+
+# Copy the app file
+COPY app.py .
+
+# Expose the Flask port
+EXPOSE 5001
+
+# Run the application
+CMD ["python", "app.py"]
