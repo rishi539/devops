@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "http://alb-devops-1149934788.us-east-1.elb.amazonaws.com:8080";
 
 export const registerUser = async (username, password) => {
   const res = await fetch(`${BASE_URL}/api/user/register?username=${username}&password=${password}`, {
@@ -9,16 +9,16 @@ export const registerUser = async (username, password) => {
 };
 
 export const loginUser = async (username, password) => {
-  const res = await fetch(`${BASE_URL}/api/user/login?username=${username}&password=${password}`,{
+  const res = await fetch(`${BASE_URL}/api/user/login?username=${username}&password=${password}`, {
     method: "POST",
   });
   if (!res.ok) throw new Error("Login failed");
   return await res.json();
 };
 
-export const deleteNotes= async (id) => {
-  const res= await fetch(`${BASE_URL}/notes/deleteNotes/${id}`,{
-    method:"DELETE"
+export const deleteNotes = async (id) => {
+  const res = await fetch(`${BASE_URL}/notes/deleteNotes/${id}`, {
+    method: "DELETE"
   });
   if (!res.ok) throw new Error("Failed to delete note");
   return true; // backend returns void, so no JSON to parse
