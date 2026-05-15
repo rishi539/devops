@@ -14,24 +14,70 @@ pipeline {
             }
         }
 
-        stage('Deploy to App Server') {
+        stage('Connect to App Server') {
             steps {
-
                 sh '''
-                ssh -o StrictHostKeyChecking=no \
-                -i ~/.ssh/devops-keypair.pem \
-                ubuntu@10.0.130.255 << EOF
+ssh -o StrictHostKeyChecking=no \
+-i /var/jenkins_home/.ssh/devops-keypair.pem \
+ubuntu@10.0.130.255 "
+echo Connected Successfully
+"
+'''
+            }
+        }
 
-                cd /home/ubuntu/app/devops/NotesGen
+        stage('Pull Latest Code') {
+            steps {
+                sh '''
+ssh -o StrictHostKeyChecking=no \
+-i /var/jenkins_home/.ssh/devops-keypair.pem \
+ubuntu@10.0.130.255 "
+cd /home/ubuntu/app/devops/NotesGen
 
-                git pull origin main
+git reset --hard
+git pull origin main
+"
+'''
+            }
+        }
 
-                sudo docker compose down
+        stage('Stop Containers') {
+            steps {
+                sh '''
+ssh -o StrictHostKeyChecking=no \
+-i /var/jenkins_home/.ssh/devops-keypair.pem \
+ubuntu@10.0.130.255 "
+cd /home/ubuntu/app/devops/NotesGen
 
-                sudo docker compose up --build -d
+sudo docker compose down
+"
+'''
+            }
+        }
 
-                EOF
-                '''
+        stage('Build and Start Containers') {
+            steps {
+                sh '''
+ssh -o StrictHostKeyChecking=no \
+-i /var/jenkins_home/.ssh/devops-keypair.pem \
+ubuntu@10.0.130.255 "
+cd /home/ubuntu/app/devops/NotesGen
+
+sudo docker compose up --build -d
+"
+'''
+            }
+        }
+
+        stage('Verify Running Containers') {
+            steps {
+                sh '''
+ssh -o StrictHostKeyChecking=no \
+-i /var/jenkins_home/.ssh/devops-keypair.pem \
+ubuntu@10.0.130.255 "
+sudo docker ps
+"
+'''
             }
         }
     }
