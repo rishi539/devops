@@ -40,7 +40,7 @@ const Navbar = () => {
               : "bg-gray-700 text-white hover:bg-gray-600"
             }`}
         >
-          View ALL My Notessss
+          View ALL My Notes
         </button>
         <button
           onClick={() => navigate("/notes")}
