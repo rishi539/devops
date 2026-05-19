@@ -28,7 +28,7 @@ const Navbar = () => {
         className="font-bold text-xl cursor-pointer"
         onClick={() => navigate("/notes")}
       >
-        📚 Notes Generatorrrr
+        📚 Notes Generator
       </h1>
 
       {/* Navigation buttons */}
